@@ -26,7 +26,7 @@
 📥 **Download now on the App Store** and take your music practice to the next level!  
 🚀 **Stay in rhythm, master your tempo, and play with confidence!**  
 
-📧 **Need Support?** Contact us at [your-email@example.com]  
-🌍 **Learn more at:** [your-marketing-url.com]  
+📧 **Need Support?** Contact us at [androidoven@gmail.com]  
+🌍 **Learn more at:** [https://github.com/wangrui-uk/wrist-metronome]  
 
-© 2025 [Your Name or Company]. All rights reserved.
+© 2025 Rui Wang. All rights reserved.

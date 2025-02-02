@@ -26,11 +26,10 @@ Wrist Metronome is a lightweight and precise metronome designed for Apple Watch.
 
 ## Troubleshooting
 **No Haptic Feedback?**
-- Ensure the watch is not in Silent Mode under **Settings > Sounds & Haptics**.
-- Restart the app and try again.
+- Verify that "Haptic On" mode is enabled for sound.
 
 **No Sound?**
-- Ensure the watch is not muted in **Settings > Sounds & Haptics**.
+- Ensure the watch is not in Silent Mode under **Settings > Sounds & Haptics**.
 - Verify that "Haptic Off" mode is enabled for sound.
 
 **Digital Crown Not Adjusting BPM?**

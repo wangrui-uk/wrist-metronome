@@ -1,44 +1,35 @@
-# Privacy Policy for Wrist Metronome App
+# Privacy Policy for Wrist Metronome
 
-Effective Date: [2025/02/02]
+Effective date: 16 November 2026 (replaces the version dated 2 February 2025)
 
-## Introduction
-Welcome to the Wrist Metronome App! Your privacy is important to us, and we are committed to protecting any personal information you share with us. This Privacy Policy outlines how we collect, use, and safeguard your information when you use our app.
+## Summary
+Wrist Metronome does not collect, store on any server, or share any personal information.
 
----
+## Information we collect
+None. The app has no accounts, analytics, advertising or tracking, and it does not connect to the internet.
 
-## Information We Collect
-We do not collect, store, or share any personal information from users of the Wrist Metronome App. All app functionality is designed to operate entirely on your device without transmitting data externally.
+## Data stored on your device
+To remember your preferences, the app saves the following **only on your device**:
+- your last tempo and output mode (haptic or sound),
+- your appearance setting (light, dark or system),
+- the practice profiles you create on iPhone or iPad (a name, a tempo and the date saved).
 
----
+This data never leaves your device, except as part of your own device backups (such as iCloud Backup), which Apple manages. Deleting the app deletes this data.
 
-## How We Use Your Information
-Since we do not collect any data, we do not use, process, or share any user information. All app features, including haptic feedback, BPM control, and sound settings, work locally on your Apple Watch.
+## Health data
+Wrist Metronome does not access or use Apple Health (HealthKit) data, and it does not start workouts.
 
----
+## Third-party services
+The app does not use or share data with any third-party services or SDKs.
 
-## Third-Party Services
-This app does not integrate with or share data with any third-party services.
+## Children
+The app collects no data from anyone, including children.
 
----
+## Changes to this policy
+If this policy changes, the updated version will be published on this page with a new effective date.
 
-## Data Security
-We take data security seriously. Since no personal data is collected or stored, there is no risk of unauthorized access to your information.
+## Contact
+- Email: androidoven@gmail.com
+- Website: https://github.com/wangrui-uk/wrist-metronome
 
----
-
-## Changes to This Privacy Policy
-We may update this Privacy Policy from time to time to reflect changes in the app or legal requirements. Updates will be posted within the app and will include the effective date of the revision.
-
----
-
-## Contact Us
-If you have any questions about this Privacy Policy or your privacy while using the app, please contact us at:
-
-- Email: [androidoven@example.com]
-- Website: [https://github.com/wangrui-uk/wrist-metronome]
-
----
-
-© 2025 Rui Wang. All rights reserved.
-
+© 2025–2026 Rui Wang. All rights reserved.

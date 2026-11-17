@@ -1,0 +1,508 @@
+/* Wrist Metronome site. Plain CSS, no external resources. */
+
+:root {
+  color-scheme: dark light;
+  --bg: #07090c;
+  --glow-blue: rgba(32, 98, 128, 0.55);
+  --glow-red: rgba(120, 36, 16, 0.45);
+  --text: #f2f4f7;
+  --muted: #a9b3bf;
+  --card: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.09);
+  --link: #6cc4ff;
+  --focus: #6cc4ff;
+  --shadow: 0 28px 60px rgba(0, 0, 0, 0.6), 0 8px 18px rgba(0, 0, 0, 0.45);
+  --pane-edge: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  /* Sampled from the App Store media (heading bar) */
+  --rainbow: linear-gradient(90deg, #26a7fb 0%, #25fbfa 18%, #25fb57 36%, #9afb25 52%, #e4f025 66%, #fbb525 80%, #fb6426 92%, #f2362a 100%);
+  --radius: 22px;
+  --max: 1120px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f3f5f8;
+    --glow-blue: rgba(38, 167, 251, 0.22);
+    --glow-red: rgba(251, 100, 38, 0.16);
+    --text: #0d1116;
+    --muted: #4a5562;
+    --card: rgba(255, 255, 255, 0.75);
+    --card-border: rgba(13, 17, 22, 0.08);
+    --link: #0a64b8;
+    --focus: #0a64b8;
+    --shadow: 0 24px 50px rgba(15, 25, 40, 0.22), 0 6px 14px rgba(15, 25, 40, 0.14);
+    --pane-edge: 0 0 0 1px rgba(0, 0, 0, 0.06);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Fixed backdrop: blue glow top-left, red glow bottom-right, as in the framed screenshots */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60vmax 50vmax at 0% 10%, var(--glow-blue), transparent 70%),
+    radial-gradient(55vmax 45vmax at 100% 100%, var(--glow-red), transparent 70%),
+    var(--bg);
+}
+
+img, video { max-width: 100%; height: auto; display: block; }
+
+a { color: var(--link); text-underline-offset: 0.18em; }
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  padding: 0.6rem 1rem;
+  background: var(--text);
+  color: var(--bg);
+  border-radius: 10px;
+  z-index: 10;
+  font-weight: 600;
+}
+.skip-link:focus { top: 1rem; }
+
+.wrap { width: min(100% - 2.5rem, var(--max)); margin-inline: auto; }
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  backdrop-filter: saturate(160%) blur(16px);
+  -webkit-backdrop-filter: saturate(160%) blur(16px);
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  border-bottom: 1px solid var(--card-border);
+}
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 56px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+.brand img { width: 30px; height: 30px; border-radius: 7px; }
+.site-nav ul { display: flex; gap: 1.25rem; list-style: none; margin: 0; padding: 0; }
+.site-nav a { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+.site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--text); }
+@media (max-width: 480px) {
+  .brand span { display: none; }
+  .site-nav ul { gap: 1rem; }
+}
+
+/* Headings with the rainbow bar */
+h1, h2, h3 { line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 0.5em; }
+h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 800; }
+h2 { font-size: clamp(1.8rem, 4vw, 2.75rem); font-weight: 800; }
+h3 { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.01em; }
+
+.bar::after {
+  content: "";
+  display: block;
+  width: 96px;
+  height: 6px;
+  margin-top: 0.55em;
+  border-radius: 3px;
+  background: var(--rainbow);
+}
+.center { text-align: center; }
+.center.bar::after, .center .bar::after { margin-inline: auto; }
+
+.lead { font-size: clamp(1.1rem, 2vw, 1.3rem); color: var(--muted); max-width: 40em; }
+.muted { color: var(--muted); }
+
+/* Hero */
+.hero { padding: clamp(3rem, 8vw, 6rem) 0 2rem; text-align: center; }
+.hero .app-icon {
+  width: 128px;
+  height: 128px;
+  margin: 0 auto 1.5rem;
+  border-radius: 28px;
+  box-shadow: var(--shadow), var(--pane-edge);
+}
+.hero h1 { margin-bottom: 0.15em; }
+.hero .subtitle {
+  font-size: clamp(1.3rem, 3vw, 1.9rem);
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  margin: 0 0 1rem;
+}
+.hero .subtitle::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 6px;
+  margin: 1rem auto 0;
+  border-radius: 3px;
+  background: var(--rainbow);
+}
+.hero .lead { margin: 0 auto 2rem; }
+.platforms { color: var(--muted); font-size: 0.95rem; margin-top: 1rem; }
+
+/* App Store badge: Apple artwork, unaltered; clear space ≥ 1/4 of its height */
+.badge-link { display: inline-block; padding: 14px; line-height: 0; border-radius: 12px; }
+.badge-link img { height: 54px; width: auto; min-height: 40px; }
+
+/* Sections */
+section { padding: clamp(3rem, 7vw, 5.5rem) 0; }
+.section-head { margin-bottom: 2.5rem; }
+.section-head.center .lead { margin-inline: auto; }
+
+/* Video */
+.video-pane {
+  margin: 0 auto;
+  max-width: 1040px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow), var(--pane-edge);
+  background: #0b1118;
+  aspect-ratio: 16 / 9;
+}
+.video-pane video { width: 100%; height: 100%; object-fit: cover; }
+
+/* Feature rows */
+.feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+.feature.reverse .feature-media { order: -1; }
+@media (max-width: 860px) {
+  .feature { grid-template-columns: minmax(0, 1fr); }
+  .feature.reverse .feature-media { order: 0; }
+}
+.feature ul { padding-left: 1.2rem; margin: 1rem 0 0; }
+.feature li { margin: 0.45rem 0; }
+.feature li strong { color: var(--text); }
+.feature li { color: var(--muted); }
+
+/* Floating app panes (raw screenshots, no device frames) */
+.pane {
+  border-radius: 14%/6.5%;
+  box-shadow: var(--shadow), var(--pane-edge);
+  background: #000;
+}
+.pane.watch { border-radius: 22%/18.5%; }
+.pane.ipad { border-radius: 4.6%/3.4%; }
+.pane.wide { border-radius: 3.4%/5%; }
+.pane.lock { border-radius: 14%/6.5%; }
+
+.feature-media { display: flex; justify-content: center; align-items: center; gap: clamp(0.75rem, 2.5vw, 1.5rem); }
+.feature-media .watch { width: min(44%, 220px); }
+.feature-media .watch.offset { transform: translateY(2.5rem); }
+.feature-media .phone { width: min(46%, 260px); }
+.feature-media .phone.offset { transform: translateY(2.5rem); }
+.stand-media { display: grid; grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr); gap: 1.25rem; align-items: center; }
+@media (max-width: 520px) { .stand-media { grid-template-columns: minmax(0, 1fr); } .stand-media .ipad { width: 75%; margin: 0 auto; } }
+
+/* Cards */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.25rem;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.card h3 { margin-bottom: 0.35rem; }
+.card p { margin: 0; color: var(--muted); }
+.card .emoji { font-size: 1.8rem; line-height: 1; margin-bottom: 0.75rem; display: block; }
+
+/* Gallery */
+.gallery {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 1.5rem 1.25rem 3rem;
+  margin: 0;
+  list-style: none;
+  align-items: center;
+  scrollbar-width: thin;
+}
+.gallery li { flex: 0 0 auto; scroll-snap-align: start; }
+.gallery .watch { width: 200px; }
+.gallery .phone { width: 220px; }
+.gallery .ipad { width: 340px; }
+.gallery .wide { width: 520px; }
+@media (max-width: 600px) {
+  .gallery .wide { width: 82vw; }
+  .gallery .ipad { width: 70vw; }
+}
+/* Cover Flow styles: see the end of this file */
+
+/* CTA */
+.cta { text-align: center; }
+
+/* Prose pages (support, privacy) */
+.prose { max-width: 760px; margin-inline: auto; padding: clamp(2.5rem, 6vw, 4.5rem) 0; }
+.prose h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); }
+.prose h2 { font-size: clamp(1.45rem, 3vw, 1.9rem); margin-top: 2.6rem; }
+.prose h2::after { width: 64px; height: 5px; }
+.prose h3 { margin-top: 1.6rem; }
+.prose li { margin: 0.4rem 0; }
+.prose ol, .prose ul { padding-left: 1.4rem; }
+.prose .card { margin: 1.25rem 0; }
+.prose details {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 0.9rem 1.2rem;
+  margin: 0.75rem 0;
+}
+.prose summary { cursor: pointer; font-weight: 650; }
+.prose details[open] summary { margin-bottom: 0.4rem; }
+.prose details ul { margin: 0.25rem 0 0.25rem; }
+.toc { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; padding: 0; list-style: none; margin: 1.25rem 0 0; }
+.inline-shot { display: flex; gap: 1rem; justify-content: center; margin: 1.5rem 0; }
+.inline-shot .watch { width: 170px; }
+.inline-shot .phone { width: 190px; }
+.inline-shot .wide { width: 100%; max-width: 520px; }
+
+kbd {
+  font: inherit;
+  font-size: 0.9em;
+  padding: 0.05em 0.4em;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  background: var(--card);
+}
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--card-border);
+  padding: 2.25rem 0 3rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.site-footer .wrap { display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between; align-items: center; }
+.site-footer ul { display: flex; flex-wrap: wrap; gap: 1.25rem; list-style: none; margin: 0; padding: 0; }
+.site-footer a { color: var(--muted); }
+.site-footer a:hover { color: var(--text); }
+.site-footer p { margin: 0; }
+
+/* Stand view: text and wide media side by side, media larger */
+.feature.stacked { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); }
+@media (max-width: 860px) { .feature.stacked { grid-template-columns: minmax(0, 1fr); } }
+.gallery { padding-inline: max(1.25rem, calc((100vw - var(--max)) / 2)); scroll-padding-inline: max(1.25rem, calc((100vw - var(--max)) / 2)); }
+.cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+/* Black stand-view panes: a soft red glow and visible edge so they read on the dark backdrop */
+.stand-media .pane { box-shadow: var(--shadow), 0 0 0 1px rgba(255, 255, 255, 0.12), 0 0 90px rgba(242, 54, 42, 0.16); }
+.prose .toc { padding: 0; }
+
+/* ---------- Screenshot gallery: Cover Flow ----------
+   main.js adds .is-cf to .gallery-wrap. Without JS the gallery stays the
+   horizontal scroll list above. Pane sizes and transforms are set by main.js. */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%);
+  white-space: nowrap;
+}
+.is-cf {
+  --cf-h: 440px;     /* common pane height (set by main.js) */
+  --cf-top: 36px;    /* room above the panes for shadows */
+  --cf-floor: 96px; /* room below the baseline for the reflection */
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: "prev stage next" ". cap ." ". nav .";
+  column-gap: clamp(0.75rem, 2.5vw, 2.25rem);
+  width: min(100% - 2.5rem, 1320px);
+  margin-inline: auto;
+}
+.is-cf .cf-row, .is-cf .cf-meta { display: contents; }
+.cf-meta[hidden], .cf-btn[hidden] { display: none; }
+
+.is-cf .gallery {
+  grid-area: stage;
+  position: relative;
+  display: block;
+  height: calc(var(--cf-top) + var(--cf-h) + var(--cf-floor));
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  scroll-snap-type: none;
+  perspective: 1600px;
+  perspective-origin: 50% calc(var(--cf-top) + var(--cf-h) * 0.55);
+  /* Fade the left and right edges into the page, so nothing looks cut off */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 17%, #000 83%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 17%, #000 83%, transparent 100%);
+  touch-action: pan-y;
+  -webkit-user-select: none;
+  user-select: none;
+  outline: none;
+}
+.is-cf .gallery li {
+  position: absolute;
+  left: 50%;
+  top: var(--cf-top);
+  height: var(--cf-h);
+  display: flex;
+  align-items: flex-end; /* common baseline */
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform 0.42s cubic-bezier(0.22, 0.7, 0.24, 1),
+    opacity 0.42s ease-out,
+    filter 0.42s ease-out,
+    visibility 0s;
+}
+.is-cf .gallery li.is-active { cursor: default; }
+.is-cf .gallery li.is-off {
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.42s cubic-bezier(0.22, 0.7, 0.24, 1),
+    opacity 0.42s ease-out,
+    filter 0.42s ease-out,
+    visibility 0s 0.42s;
+}
+.is-cf .gallery .pane {
+  max-width: none;
+  -webkit-user-drag: none;
+  /* A faint floor reflection (Safari and Chrome; ignored elsewhere) */
+  -webkit-box-reflect: below 2px linear-gradient(transparent 72%, rgba(0, 0, 0, 0.13));
+}
+@media (prefers-color-scheme: light) {
+  .is-cf .gallery .pane { -webkit-box-reflect: below 2px linear-gradient(transparent 78%, rgba(0, 0, 0, 0.07)); }
+}
+/* Focus ring around the centred screenshot, inside the edge fade */
+.is-cf .gallery:focus-visible li.is-active .pane {
+  outline: 3px solid var(--focus);
+  outline-offset: 6px;
+}
+
+/* Arrow buttons: beside the stage, centred on the panes */
+.cf-btn {
+  align-self: start;
+  margin-top: calc(var(--cf-top) + var(--cf-h) / 2 - 30px);
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  padding: 0 0 5px;
+  border: 1px solid color-mix(in srgb, var(--text) 26%, transparent);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--text) 9%, var(--bg));
+  color: var(--text);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35), inset 0 1px 0 color-mix(in srgb, var(--text) 10%, transparent);
+  font: 300 2.6rem/1 -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, opacity 0.2s, transform 0.15s;
+}
+.cf-btn[data-dir="-1"] { grid-area: prev; }
+.cf-btn[data-dir="1"] { grid-area: next; }
+.cf-btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--text) 18%, var(--bg));
+  border-color: color-mix(in srgb, var(--text) 50%, transparent);
+}
+.cf-btn:active:not(:disabled) { transform: scale(0.92); background: color-mix(in srgb, var(--text) 26%, var(--bg)); }
+.cf-btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: 50%; }
+.cf-btn:disabled { opacity: 0.28; cursor: default; box-shadow: none; }
+
+/* Caption, dots and counter under the stage */
+.cf-caption {
+  grid-area: cap;
+  margin: -0.25rem 0 0;
+  min-height: 1.6em;
+  text-align: center;
+  font-size: 1.08rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--text);
+}
+.cf-nav { grid-area: nav; display: flex; justify-content: center; align-items: center; margin-top: 0.9rem; }
+.cf-dots { display: flex; gap: 2px; }
+.cf-dot {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  background: none;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.cf-dot::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--text) 30%, transparent);
+  transition: width 0.3s ease-out, background-color 0.3s;
+}
+.is-cf-init .cf-dot::before { transition: none; }
+.cf-dot:hover::before { background: color-mix(in srgb, var(--text) 60%, transparent); }
+.cf-dot[aria-current="true"]::before { width: 22px; background: var(--rainbow); }
+.cf-dot[aria-current="true"] { width: 36px; }
+.cf-dot:focus-visible { outline-offset: 0; border-radius: 13px; }
+.cf-count { display: none; margin: 0; min-width: 4.5em; text-align: center; color: var(--muted); font-variant-numeric: tabular-nums; font-size: 0.98rem; }
+
+/* Phones: no 3D, neighbours peek; buttons and counter under the stage */
+@media (max-width: 700px) {
+  .is-cf {
+    --cf-top: 28px;
+    --cf-floor: 48px;
+    width: 100%;
+    grid-template-columns: 1fr auto auto auto 1fr;
+    grid-template-areas: "stage stage stage stage stage" "cap cap cap cap cap" ". prev nav next .";
+    column-gap: 0.75rem;
+  }
+  .is-cf .gallery {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+  }
+  .is-cf .gallery .pane { -webkit-box-reflect: none; }
+  .cf-btn { margin-top: 0.9rem; width: 54px; height: 54px; align-self: center; }
+  .cf-caption { padding-inline: 1.25rem; font-size: 1rem; }
+  .cf-dots { display: none; }
+  .cf-count { display: block; }
+}
+
+/* Reduce Motion: a simple crossfade, no 3D movement (main.js stacks the panes) */
+@media (prefers-reduced-motion: reduce) {
+  .is-cf .gallery li, .is-cf .gallery li.is-off { transition: opacity 0.3s ease-out, visibility 0s; }
+  .is-cf .gallery li.is-off { transition: opacity 0.3s ease-out, visibility 0s 0.3s; }
+  .cf-btn, .cf-dot::before { transition: none; }
+}

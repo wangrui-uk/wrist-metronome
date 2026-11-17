@@ -1,3 +1,5 @@
+> 🌐 This support page is now on the web: [https://wangrui-uk.github.io/wrist-metronome/support.html](https://wangrui-uk.github.io/wrist-metronome/support.html)
+
 # Wrist Metronome – Support
 
 Wrist Metronome is a metronome you feel as well as hear. It gives you gentle haptic taps on Apple Watch, or a clear click on Apple Watch, iPhone and iPad.

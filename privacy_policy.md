@@ -1,3 +1,5 @@
+> 🌐 This privacy policy is now on the web: [https://wangrui-uk.github.io/wrist-metronome/privacy.html](https://wangrui-uk.github.io/wrist-metronome/privacy.html)
+
 # Privacy Policy for Wrist Metronome
 
 Effective date: 16 November 2026 (replaces the version dated 2 February 2025)
